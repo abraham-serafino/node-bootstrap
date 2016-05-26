@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+const io = require('socket.io-client');
 
 document.addEventListener('DOMContentLoaded', () => {
   const socket = io.connect('http://localhost:9090');
