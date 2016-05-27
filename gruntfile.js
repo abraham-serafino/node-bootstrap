@@ -14,6 +14,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
   grunt.initConfig({
     clean: ['build'],
@@ -49,6 +51,41 @@ module.exports = function (grunt) {
       }
     },
 
+    karma: {
+      app: {
+        browsers: ['PhantomJS'],
+        frameworks: ['jasmine', 'browserify'],
+        options: { files: ['tests/karma/**/*.js'] },
+
+        preprocessors: {
+          'tests/karma/**/*.js': ['babel'],
+          'tests/karma/**/*.es5.js': ['browserify'],
+        },
+
+        babelPreprocessor: {
+          options: { presets: ['es2015'], sourceMap: 'inline' },
+
+          filename: function (file) {
+            return file.originalPath.replace(/\.js$/, '.es5.js');
+          },
+
+          sourceFileName: function (file) {
+            return file.originalPath;
+          },
+        },
+
+        phantomjsLauncher: { exitOnResourceError: true },
+        singleRun: true,
+        logLevel: 'ERROR',
+        colors: true,
+        reporters: ['spec'],
+      },
+    },
+
+    jasmine_nodejs: {
+      app: { specs: ['tests/node/**'] },
+    },
+
     express: {
       app: {
         options: { port: 3000, hostname: 'localhost', bases: ['build/client'],
@@ -63,7 +100,8 @@ module.exports = function (grunt) {
         tasks: [],
       },
 
-      autobuild: { files: ['src/**/*'], tasks: ['build'], },
+      autobuild: { files: ['src/**/*'], tasks: ['build'] },
+      autotest: { files: ['tests/**/*', 'src/**/*'], tasks: ['build', 'all_tests'] },
     },
 
     nodemon: {
@@ -75,15 +113,18 @@ module.exports = function (grunt) {
 
     concurrent: {
       options: { logConcurrentOutput: true },
-      app: ['nodemon', 'watch:autobuild', 'server'],
+      run: ['nodemon', 'watch:autobuild', 'server'],
+      test: ['nodemon', 'watch:autobuild', 'watch:autotest', 'server'],
       debug: ['nodemon', 'node-inspector', 'watch:autobuild', 'server'],
     },
   });
 
   grunt.registerTask('build', ['eslint', 'copy', 'browserify', 'exorcise', 'uglify']);
-  grunt.registerTask('rebuildAll', ['clean', 'eslint', 'copy', 'browserify', 'exorcise', 'uglify']);
+  grunt.registerTask('rebuildAll', ['clean', 'build']);
   grunt.registerTask('server', ['express', 'watch:ui']);
   grunt.registerTask('autobuild', ['watch:autobuild']);
-  grunt.registerTask('run', ['rebuildAll', 'concurrent']);
+  grunt.registerTask('run', ['rebuildAll', 'concurrent:run']);
   grunt.registerTask('default', ['run']);
+  grunt.registerTask('all_test', ['jasmine_nodejs', 'karma']);
+  grunt.registerTask('test', ['rebuildAll', 'concurrent:test']);
 };
