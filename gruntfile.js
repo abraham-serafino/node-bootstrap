@@ -18,7 +18,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
   grunt.initConfig({
-    eslint: { app: ['src'] },
+    eslint: { app: ['src', 'tests'] },
 
     copy: {
       app: { expand: true, cwd: 'src', src: '**', dest: 'build' },

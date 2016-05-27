@@ -1,8 +1,8 @@
+/* globals describe, it, expect, beforeEach, afterEach, before, after, spyOn, jasmine */
 const request = require('request');
 const testUtils = require('./test-utils');
 
 describe('Express server', () => {
-
   let server;
 
   beforeEach(() => {

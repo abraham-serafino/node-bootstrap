@@ -1,3 +1,4 @@
+/* eslint global-require: "off", import/no-unresolved: "off" */
 module.exports = {
 
   createTestServer() {
