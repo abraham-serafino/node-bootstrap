@@ -1,4 +1,3 @@
-/* globals describe, it, expect */
 describe('Hello World', () => {
 
   it('should not be Hello World', () => {

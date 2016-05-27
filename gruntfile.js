@@ -18,8 +18,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
   grunt.initConfig({
-    clean: ['build'],
-
     eslint: { app: ['src'] },
 
     copy: {
@@ -86,6 +84,8 @@ module.exports = function (grunt) {
       app: { specs: ['tests/node/**'] },
     },
 
+    clean: ['build'],
+
     express: {
       app: {
         options: { port: 3000, hostname: 'localhost', bases: ['build/client'],
@@ -100,13 +100,11 @@ module.exports = function (grunt) {
         tasks: [],
       },
 
-      autobuild: { files: ['src/**/*'], tasks: ['build'] },
-      autotest: { files: ['tests/**/*', 'src/**/*'], tasks: ['build', 'all_tests'] },
-    },
+      autobuild: { files: ['src/**/*'], tasks: ['build'] },},
 
     nodemon: {
       app: {
-        script: 'build/server/server.js',
+        script: 'build/server/__node_Bootstrap_Internals//__startup_Script.js',
         options: { watch: ['buld/server'] },
       },
     },
@@ -114,17 +112,18 @@ module.exports = function (grunt) {
     concurrent: {
       options: { logConcurrentOutput: true },
       run: ['nodemon', 'watch:autobuild', 'server'],
-      test: ['nodemon', 'watch:autobuild', 'watch:autotest', 'server'],
       debug: ['nodemon', 'node-inspector', 'watch:autobuild', 'server'],
     },
   });
 
-  grunt.registerTask('build', ['eslint', 'copy', 'browserify', 'exorcise', 'uglify']);
+  grunt.registerTask('all_tests', ['jasmine_nodejs', 'karma']);
+  grunt.registerTask('build', ['eslint', 'copy', 'browserify', 'exorcise', 'uglify', 'all_tests']);
   grunt.registerTask('rebuildAll', ['clean', 'build']);
+
+  grunt.registerTask('test', ['rebuildAll']); // everything must be rebuilt before testing;
+                                              // and rebuildAll already runs the tests
+
   grunt.registerTask('server', ['express', 'watch:ui']);
-  grunt.registerTask('autobuild', ['watch:autobuild']);
   grunt.registerTask('run', ['rebuildAll', 'concurrent:run']);
   grunt.registerTask('default', ['run']);
-  grunt.registerTask('all_test', ['jasmine_nodejs', 'karma']);
-  grunt.registerTask('test', ['rebuildAll', 'concurrent:test']);
 };

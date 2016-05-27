@@ -1,14 +1,27 @@
-/* global describe, it, expect */
-var request = require('request');
-var baseUrl = 'http://localhost:9090';
+const request = require('request');
+const testUtils = require('./test-utils');
 
 describe('Express server', () => {
 
-  it('returns status code 200', done => {
+  let server;
 
-    request.get(baseUrl, (error, response) => {
+  beforeEach(() => {
+    server = testUtils.createTestServer();
+  });
+
+  it('returns status code 404', done => {
+    request(testUtils.TEST_SERVER_BASE_URL, (error, response) => {
       expect(response.statusCode).toBe(404);
       done();
-    })
+    });
   });
+
+  it('returns status code 404 (intentional duplicate)', done => {
+    request(testUtils.TEST_SERVER_BASE_URL, (error, response) => {
+      expect(response.statusCode).toBe(404);
+      done();
+    });
+  });
+
+  afterEach(done => server.close(done));
 });
