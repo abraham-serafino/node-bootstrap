@@ -1,4 +1,5 @@
 require('path');
+const shell = require('child_process').exec;
 
 module.exports = function (grunt) {
 
@@ -16,8 +17,14 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-jasmine-nodejs');
+  grunt.loadNpmTasks('grunt-auto-install');
 
   grunt.initConfig({
+    auto_install: {
+      locals: {},
+      options: { stdout: true, stderr: true },
+    },
+
     eslint: { app: ['src', 'tests'] },
 
     copy: {
@@ -117,13 +124,13 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('all_tests', ['jasmine_nodejs', 'karma']);
-  grunt.registerTask('build', ['eslint', 'copy', 'browserify', 'exorcise', 'uglify', 'all_tests']);
+  grunt.registerTask('build', ['auto_install', 'eslint', 'copy', 'browserify', 'exorcise', 'uglify', 'all_tests']);
   grunt.registerTask('rebuildAll', ['clean', 'build']);
 
   grunt.registerTask('test', ['rebuildAll']); // everything must be rebuilt before testing;
                                               // and rebuildAll already runs the tests
 
   grunt.registerTask('server', ['express', 'watch:ui']);
-  grunt.registerTask('run', ['rebuildAll', 'concurrent:run']);
+  grunt.registerTask('run', ['auto_install', 'rebuildAll', 'concurrent:run']);
   grunt.registerTask('default', ['run']);
 };

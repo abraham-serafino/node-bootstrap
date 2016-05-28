@@ -1,0 +1,50 @@
+#!/bin/sh
+
+function usage
+{
+  echo
+  echo "Usage: nbs {command}"
+  echo "       nbs [add|remove] [package1 package 2...]"
+  echo
+  echo "Valid commands are:"
+  echo
+  echo "    build        - build the app from scratch (using grunt clean)"
+  echo "    test         - run all tests in the 'tests' folder using jasmine"
+  echo "    run          - launch your app in a browser"
+  echo "    debug        - same as 'run', but adds node-inspector for server-side debugging"
+  echo "    add / remove - add or remove the specified packages"
+  echo "    help         - show this message"
+  echo
+
+  exit 1
+}
+
+if [ $# -eq 0 ]; then
+  command="grunt run"
+
+else
+  case $1 in
+    add) command="npm install --save" ;;
+    remove) command="npm remove --save" ;;
+    build) command="node_modules/grunt-cli/bin/grunt rebuildAll" ;;
+    run) command="node_modules/grunt-cli/bin/grunt run" ;;
+    test) command="node_modules/grunt-cli/bin/grunt test" ;;
+    debug) command="node_modules/grunt-cli/bin/grunt debug" ;;
+    help) usage ;;
+    *) usage ;;
+  esac
+fi
+
+if [ ! -d "node_modules/grunt-cli" ]; then
+    npm install
+fi
+
+shift
+
+if [ $# -ne 0 ]; then
+  ${command} "$@"
+else
+  ${command}
+fi
+
+exit 0
