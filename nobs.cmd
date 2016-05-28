@@ -1,0 +1,1 @@
+node nobs.js %*

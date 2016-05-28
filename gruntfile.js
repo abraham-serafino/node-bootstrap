@@ -89,6 +89,7 @@ module.exports = function (grunt) {
 
     jasmine_nodejs: {
       app: { specs: ['tests/node/**'] },
+      options: { reporters: { console: { colors: 2 } } },
     },
 
     clean: ['build'],
@@ -131,6 +132,6 @@ module.exports = function (grunt) {
                                               // and rebuildAll already runs the tests
 
   grunt.registerTask('server', ['express', 'watch:ui']);
-  grunt.registerTask('run', ['auto_install', 'rebuildAll', 'concurrent:run']);
+  grunt.registerTask('run', ['rebuildAll', 'concurrent:run']);
   grunt.registerTask('default', ['run']);
 };
