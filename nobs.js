@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const fs = require('fs');
 const exec = require('shelljs').exec;
 
@@ -71,5 +73,4 @@ try {
 }
 
 args = args.slice(1);
-console.log(`${command} ${args.join(' ')}`);
 exec(`${command} ${args.join(' ')}`);

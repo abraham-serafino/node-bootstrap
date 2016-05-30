@@ -1,9 +1,7 @@
-require('path');
-const shell = require('child_process').exec;
-
 module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt);
+
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('gruntify-eslint');
   grunt.loadNpmTasks('grunt-contrib-copy');
@@ -34,7 +32,7 @@ module.exports = function (grunt) {
     browserify: {
       app: {
         options: {
-          browserifyOptions: { debug: true },
+          browserifyOptions: {debug: true},
           transform: [['babelify', { presets: ['es2015'] }]],
         },
 
@@ -44,7 +42,7 @@ module.exports = function (grunt) {
     },
 
     exorcise: {
-      app : {
+      app: {
         files: { 'build/bundle.js.map': ['build/bundle.js'] },
       }
     },
@@ -70,11 +68,11 @@ module.exports = function (grunt) {
         babelPreprocessor: {
           options: { presets: ['es2015'], sourceMap: 'inline' },
 
-          filename: function (file) {
+          filename (file) {
             return file.originalPath.replace(/\.js$/, '.es5.js');
           },
 
-          sourceFileName: function (file) {
+          sourceFileName (file) {
             return file.originalPath;
           },
         },
@@ -89,15 +87,20 @@ module.exports = function (grunt) {
 
     jasmine_nodejs: {
       app: { specs: ['tests/node/**'] },
-      options: { reporters: { console: { colors: 2 } } },
+      options: {reporters: {console: {colors: 2}}},
     },
 
     clean: ['build'],
 
     express: {
       app: {
-        options: { port: 3000, hostname: 'localhost', bases: ['build/client'],
-          livereload: true, open: true },
+        options: {
+          port: 3000,
+          hostname: 'localhost',
+          bases: ['build/client'],
+          livereload: true,
+          open: true,
+        },
       },
     },
 
@@ -108,7 +111,8 @@ module.exports = function (grunt) {
         tasks: [],
       },
 
-      autobuild: { files: ['src/**/*'], tasks: ['build'] },},
+      autobuild: { files: ['src/**/*'], tasks: ['build'] },
+    },
 
     nodemon: {
       app: {
@@ -129,7 +133,7 @@ module.exports = function (grunt) {
   grunt.registerTask('rebuildAll', ['clean', 'build']);
 
   grunt.registerTask('test', ['rebuildAll']); // everything must be rebuilt before testing;
-                                              // and rebuildAll already runs the tests
+                                              // and, rebuildAll already runs the tests
 
   grunt.registerTask('server', ['express', 'watch:ui']);
   grunt.registerTask('run', ['rebuildAll', 'concurrent:run']);
