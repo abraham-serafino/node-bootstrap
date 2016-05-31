@@ -16,6 +16,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-jasmine-nodejs');
   grunt.loadNpmTasks('grunt-auto-install');
+  grunt.loadNpmTasks('grunt-node-inspector');
 
   grunt.initConfig({
     auto_install: {
@@ -104,6 +105,15 @@ module.exports = function (grunt) {
       },
     },
 
+    'node-inspector': {
+      app: {
+        options: {
+          'web-port': 5000,
+          'debug-port': 5858,
+        },
+      },
+    },
+
     watch: {
       ui: {
         options: { livereload: true },
@@ -117,14 +127,22 @@ module.exports = function (grunt) {
     nodemon: {
       app: {
         script: 'build/server/__node_Bootstrap_Internals//__startup_Script.js',
-        options: { watch: ['buld/server'] },
+        options: { watch: ['build/server'] },
+      },
+
+      debug: {
+        script: 'build/server/__node_Bootstrap_Internals//__startup_Script.js',
+        options: {
+          nodeArgs: ['--debug'],
+          watch: ['build/server'],
+        },
       },
     },
 
     concurrent: {
       options: { logConcurrentOutput: true },
-      run: ['nodemon', 'watch:autobuild', 'server'],
-      debug: ['nodemon', 'node-inspector', 'watch:autobuild', 'server'],
+      run: ['nodemon:app', 'watch:autobuild', 'server'],
+      debug: ['nodemon:debug', 'node-inspector', 'watch:autobuild', 'server'],
     },
   });
 
@@ -137,5 +155,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('server', ['express', 'watch:ui']);
   grunt.registerTask('run', ['rebuildAll', 'concurrent:run']);
+  grunt.registerTask('debug', ['rebuildAll', 'concurrent:debug']);
   grunt.registerTask('default', ['run']);
 };

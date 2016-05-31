@@ -13,7 +13,7 @@ function usage() {
   console.log('    build        - build the app from scratch (using grunt clean)');
   console.log('    test         - run all tests in the "tests" folder using jasmine');
   console.log('    run          - launch your app in a browser');
-//  console.log('    debug        - same as "run," but adds node-inspector for server-side debugging');
+  console.log('    debug        - same as "run," but adds node-inspector for server-side debugging');
   console.log('    add / remove - add or remove the specified packages');
   console.log('    help         - show this message');
   console.log('');
@@ -41,7 +41,7 @@ if (args.length <= 0) {
     break;
 
   case 'build':
-    command = 'node_modules/grunt-cli/bin/grunt build';
+    command = 'node_modules/grunt-cli/bin/grunt rebuildAll';
     break;
 
   case 'run':
@@ -52,9 +52,9 @@ if (args.length <= 0) {
     command = 'node_modules/grunt-cli/bin/grunt test';
     break;
 
-/*  case 'debug':
+  case 'debug':
     command = 'node_modules/grunt-cli/bin/grunt debug';
-    break;*/
+    break;
 
   default:
     usage();
