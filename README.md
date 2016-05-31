@@ -3,8 +3,7 @@ Node Bootstrap
 
 A Meteor-like framework for bootstrapping full stack JS applications.
 
-Getting Started
----------------
+### Getting Started
 
 Clone this repository to a folder on your computer using Git, then navigate to your folder on
 the command line and issue:
@@ -15,21 +14,20 @@ If you are a Linux or Mac user, you may need to:
 
 <code>sudo npm install --global .</code>
 
-Usage
------
+### Usage
 
 After installing the Node Bootstrap framework, you should be able to copy the starter files to a new
 folder whenever you want to create a new app. Then, you can use the command-line tool to perform
 various, Meteor-like operations on your project:
 
-* __add__
+__add__
 
 <code>nobs add [package1 package2 package3 etc...]</code>
 
 This command will install the specified npm packages in your project. You can then import said packages
 into any Javascript file using require.
 
-* __remove__
+__remove__
 
 <code>nobs remove [package1 package2 package3 etc...]</code>
 
@@ -42,7 +40,7 @@ Ex.
 Removes jquery and lodash as project dependencies. They will no longer be available for use by your
 Javascript files.
 
-* __build__
+__build__
 
 <code>nobs build</code>
 
@@ -51,7 +49,8 @@ the AirBnB Javascript style-guide (this is the default coding style for Meteor),
 Javascript, concatenates and minifies your front-end JS (including dependent libraries), and runs all the
 jasmine tests in the test folder.
 
-* __test__
+__test__
+
 <code>nobs test</code>
 
 Currently same as above. Compiles your Javascript and then runs your unit tests. Tests in the tests/client
@@ -59,7 +58,7 @@ folder will be executed using PhantomJS, a headless web browser designed to supp
 the command line. Tests in the tests/server folder can be executed against an instance of a running Node
 server; see tests/node/raw-chat.spec.js for an example.
 
-* __run__
+__run__
 
 <code>nobs run</code>
 
@@ -67,7 +66,7 @@ This command will spin up a node server and launch the app in your OS' default b
 make changes, they will be picked up automatically and sent to the browser, tests will re-run, and the
 Javascript will be re-linted.
 
-* __debug__
+__debug__
 
 <code>nobs debug</code>
 
