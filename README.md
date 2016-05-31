@@ -8,11 +8,11 @@ A Meteor-like framework for bootstrapping full stack JS applications.
 Clone this repository to a folder on your computer using Git, then navigate to your folder on
 the command line and issue:
 
-<code>npm install --global .</code>
+<code>$ npm install --global .</code>
 
 If you are a Linux or Mac user, you may need to:
 
-<code>sudo npm install --global .</code>
+<code>$ sudo npm install --global .</code>
 
 ### Usage
 
@@ -22,27 +22,27 @@ various, Meteor-like operations on your project:
 
 __add__
 
-<code>nobs add [package1 package2 package3 etc...]</code>
+<code>$ nobs add [package1 package2 package3 etc...]</code>
 
 This command will install the specified npm packages in your project. You can then import said packages
 into any Javascript file using require.
 
 __remove__
 
-<code>nobs remove [package1 package2 package3 etc...]</code>
+<code>$ nobs remove [package1 package2 package3 etc...]</code>
 
 This command removes the specified packages from your project.
 
 Ex.
 
-<code>nobs remove jquery lodash</code>
+<code>$ nobs remove jquery lodash</code>
 
 Removes jquery and lodash as project dependencies. They will no longer be available for use by your
 Javascript files.
 
 __build__
 
-<code>nobs build</code>
+<code>$ nobs build</code>
 
 Transpiles your ES6 code to ES5 using Babel, runs it through ESLint to ensure that you are following
 the AirBnB Javascript style-guide (this is the default coding style for Meteor), minifies your
@@ -51,7 +51,7 @@ jasmine tests in the test folder.
 
 __test__
 
-<code>nobs test</code>
+<code>$ nobs test</code>
 
 Currently same as above. Compiles your Javascript and then runs your unit tests. Tests in the tests/client
 folder will be executed using PhantomJS, a headless web browser designed to support front-end testing from
@@ -60,7 +60,7 @@ server; see tests/node/raw-chat.spec.js for an example.
 
 __run__
 
-<code>nobs run</code>
+<code>$ nobs run</code>
 
 This command will spin up a node server and launch the app in your OS' default browser. Any time you
 make changes, they will be picked up automatically and sent to the browser, tests will re-run, and the
@@ -68,6 +68,6 @@ Javascript will be re-linted.
 
 __debug__
 
-<code>nobs debug</code>
+<code>$ nobs debug</code>
 
 Similar to the "run" command, but makes the Node Inspector available on port 5858.
