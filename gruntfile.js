@@ -147,8 +147,8 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('all_tests', ['jasmine_nodejs', 'karma']);
-  grunt.registerTask('build', ['auto_install', 'eslint', 'copy', 'browserify', 'exorcise', 'uglify', 'all_tests']);
-  grunt.registerTask('rebuildAll', ['clean', 'build']);
+  grunt.registerTask('build', ['eslint', 'copy', 'browserify', 'exorcise', 'uglify', 'all_tests']);
+  grunt.registerTask('rebuildAll', ['clean', 'auto_install', 'build']);
 
   grunt.registerTask('test', ['rebuildAll']); // everything must be rebuilt before testing;
                                               // and, rebuildAll already runs the tests

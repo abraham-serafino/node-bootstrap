@@ -9,6 +9,7 @@ module.exports = function main(server) {
 
     socket.on('chat message', message => io.emit('chat message', message));
     socket.on('disconnect', () => {
+      // debugger;
       console.log('user disconnected');
     });
   });
