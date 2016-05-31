@@ -1,7 +1,7 @@
 Node Bootstrap
 --------------
 
-A Meteor-like framework for bootstrapping full stack JS applications.
+A Meteor-like framework for bootstrapping full-stack Javascript applications.
 
 ### Getting Started
 
